@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Role = require("../models/role.model");
 const Account = require("../models/account");
-const AccountRole = require("../models/AccountRole.model");
+const AccountRole = require("../models/account_role.model");
 
 exports.get_all = (req, res, next) => {
   var AccountRole_list = [];

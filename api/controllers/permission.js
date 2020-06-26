@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
-const Permisson = require('../models/permission.model');
+const Permission = require('../models/permission.model');
 
 exports.get_all = (req, res, next) => {
-  Permisson.find().exec()
+  Permission.find().exec()
     .then((data) => {
       let perList = data.map((p) => {
         return p;
@@ -16,7 +16,7 @@ exports.get_all = (req, res, next) => {
 
 exports.get_by_id = (req, res, next) => {
   const permission_id = req.params.permissionid;
-  Permisson.findOne({ _id: permission_id }).exec()
+  Permission.findOne({ _id: permission_id }).exec()
     .then((data) => {
       console.log(data);
       return res.status(200).send(data);
@@ -29,7 +29,7 @@ exports.get_by_id = (req, res, next) => {
 exports.create = (req, res, next) => {
   const input = req.body;
   console.log(input);
-  var newPermission = new Permisson();
+  var newPermission = new Permission();
   newPermission.object = input.object;
 
   if ("create" in input) {
@@ -66,15 +66,15 @@ exports.create = (req, res, next) => {
 exports.delete_by_id = (req, res, next) => {
   const permission_id = req.params.permissionid;
 
-  var per = new Permisson();
+  var per = new Permission();
 
-  Permisson.findOne({ _id: permission_id }).exec()
+  Permission.findOne({ _id: permission_id }).exec()
     .then((data) => {
       if (!data) {
         return res.status(400).send();
       }
       per = data;
-      return Permisson.deleteOne({ _id: permission_id }).exec()
+      return Permission.deleteOne({ _id: permission_id }).exec()
     })
     .then(() => {
       return res.status(200).send(per);

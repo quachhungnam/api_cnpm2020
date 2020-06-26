@@ -14,6 +14,7 @@ const provinceRoutes = require("./api/routes/provinces");
 const districtRoutes = require("./api/routes/districts");
 const accountRoutes = require("./api/routes/accounts");
 const feedbackRoutes = require("./api/routes/feedbacks");
+const roleRoutes = require("./api/routes/role_route");
 
 app.use(morgan("dev"));
 app.use(express.json());
@@ -62,6 +63,7 @@ app.use("/provinces", provinceRoutes);
 app.use("/districts", districtRoutes);
 app.use("/accounts", accountRoutes);
 app.use("/feedbacks", feedbackRoutes);
+app.use("/role", roleRoutes);
 // app.use('/postspending',posts_route.)
 
 app.use((req, res, next) => {

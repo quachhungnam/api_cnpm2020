@@ -5,10 +5,11 @@ const router = express.Router();
 
 const checkAuth = require('../middlewares/check-auth');
 const FeedbacksController = require('../controllers/feedbacks');
+const Authorization = require("../controllers/authorization.controller");
 
 router.get('/', FeedbacksController.feedbacks_get_all);
 
-router.post('/', checkAuth, FeedbacksController.feedbacks_create_feedback);
+router.post('/', checkAuth, Authorization.checkPermission, FeedbacksController.feedbacks_create_feedback);
 
 router.get('/:feedbackId', FeedbacksController.feedbacks_get_feedback);
 

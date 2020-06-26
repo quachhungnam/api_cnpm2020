@@ -44,24 +44,21 @@ var checkPermission = (req, res, next) => {
     Account_Role.find({"account_id": req.userData.accountId}).exec()
     .then((data) => {
         if (data == null) {
-            console.log("vcsjdcj");
-            return res.status(500);
+            throw new Error("account_id Not Found");
         }
         account_roleList = data.map((item) => item.role_id.toString());
-        console.log(query);
         return Permission.findOne(query).exec();
     })
     .then((data) => {
         if (data == null) {
-            console.log("vcsjdcj");
-            return res.status(500);
+            throw new Error("Permission Not Found");
         }
         let perm = data._id;
         return Role_Permission.find({"permission_id": perm}).exec();
     })
     .then((data) => {
         if (data ==  null) {
-            return res.status(500);
+            throw new Error("permission_id Not Found");
         }
         roleList = data.map(item => item.role_id.toString());
         account_roleList.forEach(item => {
@@ -70,9 +67,13 @@ var checkPermission = (req, res, next) => {
                 next();
             }
             else {
-                return res.status(401).json({message: 'Unauthorized'});
+                return res.status(409).json({message: 'Unauthorized'});
             }
         });
+    })
+    .catch(err => {
+        console.log(err);
+        return res.status(500).send();
     });       
 }
 

@@ -3,8 +3,9 @@ const router = express.Router()
 const post_controller = require('../controllers/post_controller')
 const check_auth = require('../middlewares/check-auth')
 const upload = require('../middlewares/upload_image')
+const Authorization = require("../controllers/authorization.controller");
 
-router.post('/', check_auth, post_controller.add_post)
+router.post('/', check_auth, Authorization.checkPermission, post_controller.add_post)
 router.post('/addnewpost', check_auth, upload, post_controller.add_post_new)
 router.put('/:postId', check_auth, upload, post_controller.update_post)
 router.patch('/status/:postId', check_auth, post_controller.update_post_status)

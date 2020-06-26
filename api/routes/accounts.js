@@ -5,6 +5,7 @@ const router = express.Router();
 
 const checkAuth = require("../middlewares/check-auth");
 const AccountController = require("../controllers/accounts");
+const Authorization = require("../controllers/authorization.controller");
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -32,7 +33,7 @@ const upload = multer({
   fileFilter: fileFilter,
 });
 
-router.get("/", checkAuth, AccountController.accounts_get_all);
+router.get("/", checkAuth, Authorization.checkPermission, AccountController.accounts_get_all);
 
 router.get("/:accountId", checkAuth, AccountController.accounts_get_account);
 

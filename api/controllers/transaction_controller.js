@@ -129,10 +129,11 @@ module.exports.get_a_transaction = async (req, res, next) => {
     const transaction = await Transaction.findById(transaction_id)
       .populate({
         path: "post_id",
-        select: "title status_id host_id",
+        select:
+          "title price status_id host_id post_type_id district_id province_id post_image",
         populate: {
-          path: "status_id host_id",
-          select: "username name code description",
+          path: "status_id host_id post_type_id district_id province_id",
+          select: "username name code description name_with_type",
         },
       })
       .populate({ path: "client_id", select: "username name" });
@@ -158,7 +159,7 @@ module.exports.get_all_transaction = async (req, res, next) => {
       .populate({
         path: "post_id",
         select:
-          "title price status_id host_id post_type_id district_id province_id",
+          "title price status_id host_id post_type_id district_id province_id post_image",
         populate: {
           path: "status_id host_id post_type_id district_id province_id",
           select: "username name code description name_with_type",
@@ -192,7 +193,7 @@ module.exports.get_all_transaction_account = async (req, res, next) => {
       .populate({
         path: "post_id",
         select:
-          "title price status_id host_id post_type_id district_id province_id",
+          "title price status_id host_id post_type_id district_id province_id post_image",
         populate: {
           path: "status_id host_id post_type_id district_id province_id",
           select: "username name code description name_with_type",

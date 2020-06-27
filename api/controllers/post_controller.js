@@ -401,7 +401,7 @@ module.exports.get_all_post = async (req, res, next) => {
 module.exports.get_all_post_with_page = async (req, res, next) => {
     try {
         const status_code = await req.params.code;
-        if(status_code == 0) {
+        if(status_code == 1) {
             const status1 = await Status.find({ code: status_code });
             const status2 = await Status.find({ code: 2 });
             const post = await Post.find({ $or: [{status_id: status1[0]._id}, {status_id: status2[0]._id}]  })

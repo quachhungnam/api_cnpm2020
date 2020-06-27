@@ -404,7 +404,7 @@ module.exports.get_all_post_with_page = async (req, res, next) => {
         if(status_code == 0) {
             const status1 = await Status.find({ code: status_code });
             const status2 = await Status.find({ code: 2 });
-            const post = await Post.find({ $or: [{status_id: status1[0]._id}, {status_id: status2[0]._id}}]  })
+            const post = await Post.find({ $or: [{status_id: status1[0]._id}, {status_id: status2[0]._id}]  )
                 .sort({ created_at: "desc" }) //thoi gian tao gan nhat thi o dau
                 .populate({ path: "host_id", select: "name username email mobile" })
                 .populate({ path: "post_type_id", select: "name description" })
@@ -414,7 +414,8 @@ module.exports.get_all_post_with_page = async (req, res, next) => {
                     select: "name code parent_code name_with_type",
                 })
                 .populate({ path: "status_id", select: "code description" })
-        } else {
+            }
+        else {
             const status = await Status.find({ code: status_code });
             const post = await Post.find({ status_id: status[0]._id })
                 .sort({ created_at: "desc" }) //thoi gian tao gan nhat thi o dau

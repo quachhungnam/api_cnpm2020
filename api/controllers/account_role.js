@@ -46,7 +46,7 @@ exports.get_by_id = (req, res, next) => {
 
 exports.create = (req, res, next) => {
   const input = req.body;
-  var newAccountRole = new Role();
+  var newAccountRole = new AccountRole();
   newAccountRole.account_id = input.accountid;
   newAccountRole.role_id = input.roleid;
   newAccountRole._id = new mongoose.Types.ObjectId();

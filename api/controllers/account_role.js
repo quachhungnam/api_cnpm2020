@@ -50,7 +50,7 @@ exports.create = (req, res, next) => {
   newAccountRole.account_id = input.accountid;
   newAccountRole.role_id = input.roleid;
   newAccountRole._id = new mongoose.Types.ObjectId();
-  newRole
+  newAccountRole
     .save()
     .then((data) => {
       console.log(data);

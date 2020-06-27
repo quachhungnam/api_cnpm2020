@@ -5,39 +5,15 @@ const router = express.Router();
 
 const checkAuth = require("../middlewares/check-auth");
 const AccountController = require("../controllers/accounts");
-const Authorization = require("../controllers/authorization.controller");
+const upload = require("../middlewares/upload_image");
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "./uploads/");
-  },
-  filename: (req, file, cb) => {
-    cb(null, file.originalname);
-  },
-});
-
-const fileFilter = (req, file, cb) => {
-  // reject a file
-  if (file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
-    cb(null, true);
-  } else {
-    cb(null, false);
-  }
-};
-
-const upload = multer({
-  storage: storage,
-  limits: {
-    fileSize: 1024 * 1024 * 5,
-  },
-  fileFilter: fileFilter,
-});
-
-router.get("/", checkAuth, Authorization.checkPermission, AccountController.accounts_get_all);
+router.get("/", AccountController.accounts_get_all);
 
 router.get("/:accountId", checkAuth, AccountController.accounts_get_account);
 
 router.post("/signup", AccountController.account_signup);
+
+router.post("/create", AccountController.account_create_account);
 
 router.post("/login", AccountController.account_login);
 
@@ -68,7 +44,7 @@ router.patch(
 router.patch(
   "/:accountId/avatar",
   checkAuth,
-  upload.single("avatar"),
+  upload,
   AccountController.accounts_update_account_avatar
 );
 
@@ -77,5 +53,9 @@ router.delete(
   checkAuth,
   AccountController.accounts_delete_account
 );
-router.get('/usertoken/yes', checkAuth, AccountController.get_account_from_token)
+router.get(
+  "/usertoken/yes",
+  checkAuth,
+  AccountController.get_account_from_token
+);
 module.exports = router;

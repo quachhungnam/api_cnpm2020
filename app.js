@@ -53,6 +53,7 @@ app.use((req, res, next) => {
   next();
 });
 //router
+
 app.use("/posts", posts_route);
 app.use("/posttypes", post_types_route);
 app.use("/transactions", transactions_route);

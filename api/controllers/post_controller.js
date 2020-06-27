@@ -401,17 +401,33 @@ module.exports.get_all_post = async (req, res, next) => {
 module.exports.get_all_post_with_page = async (req, res, next) => {
     try {
         const status_code = await req.params.code;
-        const status = await Status.find({ code: status_code });
-        const post = await Post.find({ status_id: status[0]._id })
-            .sort({ created_at: "desc" }) //thoi gian tao gan nhat thi o dau
-            .populate({ path: "host_id", select: "name username email mobile" })
-            .populate({ path: "post_type_id", select: "name description" })
-            .populate({ path: "province_id", select: "name code name_with_type" })
-            .populate({
-                path: "district_id",
-                select: "name code parent_code name_with_type",
-            })
-            .populate({ path: "status_id", select: "code description" })
+        if(status_code == 0) {
+            const status1 = await Status.find({ code: status_code });
+            const status2 = await Status.find({ code: 2 });
+            const post = await Post.find({ $or: [{status_id: status1[0]._id}, {status_id: status2[0]._id}}]  })
+                .sort({ created_at: "desc" }) //thoi gian tao gan nhat thi o dau
+                .populate({ path: "host_id", select: "name username email mobile" })
+                .populate({ path: "post_type_id", select: "name description" })
+                .populate({ path: "province_id", select: "name code name_with_type" })
+                .populate({
+                    path: "district_id",
+                    select: "name code parent_code name_with_type",
+                })
+                .populate({ path: "status_id", select: "code description" })
+        } else {
+            const status = await Status.find({ code: status_code });
+            const post = await Post.find({ status_id: status[0]._id })
+                .sort({ created_at: "desc" }) //thoi gian tao gan nhat thi o dau
+                .populate({ path: "host_id", select: "name username email mobile" })
+                .populate({ path: "post_type_id", select: "name description" })
+                .populate({ path: "province_id", select: "name code name_with_type" })
+                .populate({
+                    path: "district_id",
+                    select: "name code parent_code name_with_type",
+                })
+                .populate({ path: "status_id", select: "code description" })
+        }
+        
         // if (posts.length <= 0) {
         //     return res.status(404).json({
         //         error: 'post not found'

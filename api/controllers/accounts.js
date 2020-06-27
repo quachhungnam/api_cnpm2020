@@ -12,7 +12,7 @@ exports.accounts_get_all = (req, res, next) => {
   Account.find()
     .populate({ path: "idRole", select: "name _id" })
     .select(
-      "_id username password status name email avatar mobile address created_at created_by updated_at updated_by"
+      "_id username password status name email avatar idRole mobile address created_at created_by updated_at updated_by"
     )
     .exec()
     .then((docs) => {
@@ -26,6 +26,7 @@ exports.accounts_get_all = (req, res, next) => {
             status: doc.status,
             name: doc.name,
             email: doc.email,
+            idRole: doc.idRole,
             avatar: doc.avatar,
             mobile: doc.mobile,
             address: doc.address,

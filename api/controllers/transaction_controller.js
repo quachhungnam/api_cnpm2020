@@ -18,7 +18,7 @@ module.exports.add_transaction = async (req, res, next) => {
       return res.status(404).json({ error: "post does not exist" });
     }
     const transaction = await Transaction.find({
-      client_id: client_id,
+      // client_id: client_id,
       post_id: post_id,
     });
     if (transaction.length > 0) {

@@ -1,3 +1,5 @@
 {
-    "deno.enable": false
+    "deno.enable": false,
+    "appService.defaultWebAppToDeploy": "/subscriptions/22ed055c-441a-46c3-8dc8-c4686741bd2b/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/cnpmnhom7",
+    "appService.deploySubpath": "."
 }

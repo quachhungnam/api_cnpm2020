@@ -568,8 +568,8 @@ module.exports.get_all_post_with_address = async (req, res, next) => {
         const post = await Post.find(option)
             .populate({ path: "host_id", select: "name mobile" })
             .populate({ path: "post_type_id", select: "name" })
-            .populate({ path: "province_id", select: "name name_with_type" })
-            .populate({ path: "district_id", select: "name name_with_type" })
+            .populate({ path: "province_id" })
+            .populate({ path: "district_id" })
             .populate({ path: "status_id", select: "code description" });
         if (post.length <= 0) {
             return res.status(404).json({
